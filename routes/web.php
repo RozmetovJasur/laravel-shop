@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\PermissionsController;
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,5 +15,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::auth();
+
+Route::group(['namespace' => 'App\Http\Controllers'], function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/', [HomeController::class, 'index']);
+
+    Route::auth();
+
+    Route::group(['middleware' => ['auth', 'permission'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+
+        Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+        Route::resource('roles', RolesController::class);
+        Route::resource('permissions', PermissionsController::class);
+    });
+});
