@@ -10,34 +10,28 @@ use Spatie\Permission\Models\Permission;
 class PermissionsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
         $permissions = Permission::all();
 
-        return view('permissions.index', [
+        return view('admin.permissions.index', [
             'permissions' => $permissions
         ]);
     }
 
     /**
-     * Show form for creating permissions
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function create()
     {
-        return view('permissions.create');
+        return view('admin.permissions.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return mixed
      */
     public function store(Request $request)
     {
@@ -47,31 +41,28 @@ class PermissionsController extends Controller
 
         Permission::create($request->only('name'));
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('admin.permissions.index')
             ->withSuccess(__('Permission created successfully.'));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Permission $post
-     * @return \Illuminate\Http\Response
+     * @param Permission $permission
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(Permission $permission)
+    public function edit(string $locale, Permission $permission)
     {
-        return view('permissions.edit', [
+        return view('admin.permissions.edit', [
             'permission' => $permission
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
+     * @param string $locale
+     * @param Request $request
      * @param Permission $permission
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
-    public function update(Request $request, Permission $permission)
+    public function update(string $locale, Request $request, Permission $permission)
     {
         $request->validate([
             'name' => 'required|unique:permissions,name,' . $permission->id
@@ -79,21 +70,20 @@ class PermissionsController extends Controller
 
         $permission->update($request->only('name'));
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('admin.permissions.index')
             ->withSuccess(__('Permission updated successfully.'));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Post $post
-     * @return \Illuminate\Http\Response
+     * @param string $locale
+     * @param Permission $permission
+     * @return mixed
      */
-    public function destroy(Permission $permission)
+    public function destroy(string $locale, Permission $permission)
     {
         $permission->delete();
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('admin.permissions.index')
             ->withSuccess(__('Permission deleted successfully.'));
     }
 }

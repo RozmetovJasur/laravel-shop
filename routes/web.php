@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,17 +17,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['namespace' => 'App\Http\Controllers'], function () {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', function () {
+    return redirect(app()->getLocale());
+});
 
-    Route::get('/', [HomeController::class, 'index']);
+Route::prefix('{locale}')
+    ->middleware('setlocale')
+    ->group(function () {
 
-    Route::auth();
+    Route::group(['namespace' => 'App\Http\Controllers'], function () {
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::group(['middleware' => ['auth', 'permission'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::get('/', [HomeController::class, 'index']);
 
-        Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
-        Route::resource('roles', RolesController::class);
-        Route::resource('permissions', PermissionsController::class);
+        Route::auth();
+
+        Route::group(['middleware' => ['auth', 'permission'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+
+            Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+            Route::resource('roles', RolesController::class);
+            Route::resource('permissions', PermissionsController::class);
+        });
     });
 });

@@ -7,14 +7,22 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
                 @if(request()->routeIs('admin*'))
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
-                               href="{{ route('admin.roles.index')  }}">Role</a>
+                               href="{{ route('admin.home')  }}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                               href="{{ route('admin.roles.index')  }}">Roles</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                               href="{{ route('admin.permissions.index')  }}">Permissions</a>
                         </li>
                     </ul>
                 @else
-                    <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
@@ -35,7 +43,7 @@
                     </ul>
                 @endif
 
-                <ul class="navbar-nav my-2 my-lg-0 navbar-nav-scroll ms-auto" style="--bs-scroll-height: 100px;">
+                <ul class="navbar-nav my-0 ms-auto">
                     @guest()
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login')  }}">Login</a>
@@ -68,7 +76,33 @@
                             </ul>
                         </li>
                     @endguest
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            {{ app()->getLocale() }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach(config('app.available_locales') as $locale)
+                                <li>
+                                    <a class="dropdown-item {{ app()->getLocale()== $locale ?'active':''  }}"
+                                       href="{{ route('home', ['locale' => $locale])  }}">
+                                        {{ strtoupper($locale) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </li>
+                    @auth()
+                        @if(request()->routeIs('admin*'))
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home')  }}">Front side</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.home')  }}">Admin side</a>
+                            </li>
+                        @endif
+                    @endguest
                 </ul>
             </div>
         </div>
