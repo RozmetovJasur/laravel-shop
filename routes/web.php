@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\HomeController;
@@ -25,18 +26,19 @@ Route::prefix('{locale}')
     ->middleware('setlocale')
     ->group(function () {
 
-    Route::group(['namespace' => 'App\Http\Controllers'], function () {
-        Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::group(['namespace' => 'App\Http\Controllers'], function () {
+            Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-        Route::get('/', [HomeController::class, 'index']);
+            Route::get('/', [HomeController::class, 'index']);
 
-        Route::auth();
+            Route::auth();
 
-        Route::group(['middleware' => ['auth', 'permission'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+            Route::group(['middleware' => ['auth', 'permission'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
 
-            Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
-            Route::resource('roles', RolesController::class);
-            Route::resource('permissions', PermissionsController::class);
+                Route::get('/', [\App\Http\Controllers\Admin\HomeController::class, 'index'])->name('home');
+                Route::resource('roles', RolesController::class);
+                Route::resource('permissions', PermissionsController::class);
+                Route::resource('category', CategoryController::class);
+            });
         });
     });
-});

@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="bg-light rounded">
-        <h2>Permissions</h2>
+        <h2>Categories</h2>
         <div class="lead">
-            Manage your permissions here.
-            <a href="{{ route('admin.permissions.create') }}" class="btn btn-primary btn-sm float-right">Add
-                permissions</a>
+            Manage your categories here.
+            <a href="{{ route('admin.category.create') }}" class="btn btn-primary btn-sm float-right">Add
+                category</a>
         </div>
 
         <div class="mt-2">
@@ -17,19 +17,20 @@
             <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Guard</th>
+                <th scope="col">Status</th>
                 <th scope="col" colspan="3" width="1%"></th>
             </tr>
             </thead>
             <tbody>
-            @foreach($permissions as $permission)
+            @foreach($categories as $category)
                 <tr>
-                    <td>{{ $permission->name }}</td>
-                    <td>{{ $permission->guard_name }}</td>
-                    <td><a href="{{ route('admin.permissions.edit', $permission->id) }}" class="btn btn-info btn-sm">Edit</a>
+                    <td>{{ $category->name }}</td>
+                    <td>{{ $category->getIsActiveText() }}</td>
+                    <td><a href="{{ route('admin.category.edit', $category->id) }}"
+                           class="btn btn-info btn-sm">Edit</a>
                     </td>
                     <td>
-                        {!! Form::open(['method' => 'DELETE','route' => ['admin.permissions.destroy', $permission->id],'style'=>'display:inline']) !!}
+                        {!! Form::open(['method' => 'DELETE','route' => ['admin.category.destroy', $category->id],'style'=>'display:inline']) !!}
                         {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm delete']) !!}
                         {!! Form::close() !!}
                     </td>
@@ -37,6 +38,6 @@
             @endforeach
             </tbody>
         </table>
-
+        {{ $categories->links() }}
     </div>
 @endsection

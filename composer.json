@@ -17,6 +17,7 @@
         "laravelcollective/html": "^6.3",
         "spatie/laravel-permission": "^5.7",
         "spatie/laravel-route-attributes": "^1.17",
+        "spatie/laravel-sluggable": "^3.4",
         "spatie/laravel-translatable": "^6.2"
     },
     "require-dev": {

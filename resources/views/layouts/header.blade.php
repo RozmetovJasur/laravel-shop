@@ -20,6 +20,10 @@
                             <a class="nav-link active" aria-current="page"
                                href="{{ route('admin.permissions.index')  }}">Permissions</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page"
+                               href="{{ route('admin.category.index')  }}">Category</a>
+                        </li>
                     </ul>
                 @else
                     <ul class="navbar-nav me-auto mb-2 mb-md-0">
