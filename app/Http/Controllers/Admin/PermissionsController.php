@@ -9,10 +9,7 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionsController extends Controller
 {
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function index()
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $permissions = Permission::all();
 
@@ -21,19 +18,12 @@ class PermissionsController extends Controller
         ]);
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.permissions.create');
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
+    public function store(Request $request): mixed
     {
         $request->validate([
             'name' => 'required|unique:users,name'
@@ -45,24 +35,14 @@ class PermissionsController extends Controller
             ->withSuccess(__('Permission created successfully.'));
     }
 
-    /**
-     * @param Permission $permission
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function edit(string $locale, Permission $permission)
+    public function edit(Permission $permission): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         return view('admin.permissions.edit', [
             'permission' => $permission
         ]);
     }
 
-    /**
-     * @param string $locale
-     * @param Request $request
-     * @param Permission $permission
-     * @return mixed
-     */
-    public function update(string $locale, Request $request, Permission $permission)
+    public function update(Request $request, Permission $permission): mixed
     {
         $request->validate([
             'name' => 'required|unique:permissions,name,' . $permission->id
@@ -74,12 +54,7 @@ class PermissionsController extends Controller
             ->withSuccess(__('Permission updated successfully.'));
     }
 
-    /**
-     * @param string $locale
-     * @param Permission $permission
-     * @return mixed
-     */
-    public function destroy(string $locale, Permission $permission)
+    public function destroy(string $locale, Permission $permission): mixed
     {
         $permission->delete();
 

@@ -9,11 +9,7 @@ use Spatie\Permission\Models\Permission;
 
 class RolesController extends Controller
 {
-    /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $roles = Role::orderBy('id', 'DESC')->paginate(5);
 
@@ -21,21 +17,13 @@ class RolesController extends Controller
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
-    /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $permissions = Permission::get();
         return view('admin.roles.create', compact('permissions'));
     }
 
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function store(string $locale,Request $request)
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
@@ -49,22 +37,14 @@ class RolesController extends Controller
             ->with('success', 'Role created successfully');
     }
 
-    /**
-     * @param Role $role
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function show(string $locale, Role $role)
+    public function show(Role $role): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $rolePermissions = $role->permissions;
 
         return view('admin.roles.show', compact('role', 'rolePermissions'));
     }
 
-    /**
-     * @param Role $role
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function edit(string $locale,Role $role)
+    public function edit(Role $role): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
         $rolePermissions = $role->permissions->pluck('name')->toArray();
         $permissions = Permission::get();
@@ -72,13 +52,7 @@ class RolesController extends Controller
         return view('admin.roles.edit', compact('role', 'rolePermissions', 'permissions'));
     }
 
-    /**
-     * @param Role $role
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function update(string $locale,Role $role, Request $request)
+    public function update(Role $role, Request $request): \Illuminate\Http\RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required',
@@ -93,11 +67,7 @@ class RolesController extends Controller
             ->with('success', 'Role updated successfully');
     }
 
-    /**
-     * @param Role $role
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(string $locale,Role $role)
+    public function destroy(Role $role): \Illuminate\Http\RedirectResponse
     {
         $role->delete();
 
