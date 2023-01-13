@@ -31,15 +31,17 @@
 
                             <div id="lang{{ $prefix }}" class="tab-pane container fade {{ $class }}">
                                 <div class="row gy-3 mt-3">
-                                    <div class="col-6">
+                                    <div class="col-9">
                                         <label for="name" class="form-label">Name({{ $prefix }})</label>
                                         <input class="form-control" type="text" name="name[{{ $prefix }}]"
-                                               placeholder="Name" required/>
-                                        @if ($errors->has('name['.$prefix.']'))
+                                               placeholder="Name" value="{{ old('name.'.$prefix)  }}" required/>
+
+                                        @if ($errors->has('name.'.$prefix))
                                             <span class="text-danger text-left">
-                                                {{ $errors->first('name['.$prefix.']') }}
+                                                {{ $errors->first('name.'.$prefix) }}
                                             </span>
                                         @endif
+
                                     </div>
                                 </div>
                             </div>

@@ -29,7 +29,8 @@ class PermissionsDemoSeeder extends Seeder
         if (empty($user)) {
             $user = \App\Models\User::factory()->create([
                 'name' => 'Jasur',
-                'email' => 'a@a.com'
+                'email' => 'a@a.com',
+                'password' => bcrypt('123123123')
             ]);
         }
 

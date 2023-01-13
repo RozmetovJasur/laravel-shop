@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PermissionsController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,7 @@ Route::prefix('{locale}')
                 Route::resource('roles', RolesController::class);
                 Route::resource('permissions', PermissionsController::class);
                 Route::resource('category', CategoryController::class);
+                Route::resource('product', ProductController::class);
             });
         });
     });
