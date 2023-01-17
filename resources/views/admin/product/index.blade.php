@@ -16,7 +16,9 @@
         <table class="table table-responsive table-hover table-striped">
             <thead>
             <tr>
+                <th scope="col">@lang('app.name')</th>
                 <th scope="col">Name</th>
+                <th scope="col">Price</th>
                 <th scope="col">Status</th>
                 <th scope="col" colspan="3" width="1%"></th>
             </tr>
@@ -24,9 +26,13 @@
             <tbody>
             @foreach($products as $product)
                 <tr>
+                    <td>
+                        <img width="50" height="50" src="{{ $product->getFirstFile() ? asset($product->getFirstFile()->path()) : "-" }}"/>
+                    </td>
                     <td>{{ $product->name }}</td>
+                    <td>{{ $product->price }}</td>
                     <td>{{ $product->status }}</td>
-                    <td><a href="{{ route('admin.category.edit', $product->id) }}"
+                    <td><a href="{{ route('admin.product.edit', $product->id) }}"
                            class="btn btn-info btn-sm">Edit</a>
                     </td>
                     <td>

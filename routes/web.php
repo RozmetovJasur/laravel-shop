@@ -5,8 +5,9 @@ use App\Http\Controllers\Admin\PermissionsController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
-use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,11 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::get('/', function () {
     return redirect(app()->getLocale());
 });
+
+Route::get('locale/{locale}', function (string $locale, Request $request) {
+    Session::put('locale', $locale);
+    return redirect()->back();
+})->name('change.lang');
 
 Route::prefix('{locale}')
     ->middleware('setlocale')

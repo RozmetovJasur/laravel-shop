@@ -11,7 +11,7 @@ class ProductRequest extends FormRequest
         return [
             'name.*' => 'required|string',
             'description.*' => 'required|string',
-            'price' => 'required|integer',
+            'price' => 'required|numeric',
             'category_id' => 'exists:App\Models\Category,id',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ];

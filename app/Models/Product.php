@@ -34,14 +34,23 @@ class Product extends Model
             ->saveSlugsTo('slug');
     }
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
+//    public function getRouteKeyName(): string
+//    {
+//        return 'slug';
+//    }
 
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
 
+    public function files()
+    {
+        return $this->hasMany(Files::class, 'object_id', 'id');
+    }
+
+    public function getFirstFile()
+    {
+        return $this->files()->first();
     }
 }

@@ -93,7 +93,7 @@
                             @foreach(config('app.available_locales') as $locale)
                                 <li>
                                     <a class="dropdown-item {{ app()->getLocale()== $locale ?'active':''  }}"
-                                       href="{{ route('home', ['locale' => $locale])  }}">
+                                       href="{{route('change.lang',['locale' => $locale])}}">
                                         {{ strtoupper($locale) }}
                                     </a>
                                 </li>

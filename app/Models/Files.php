@@ -20,5 +20,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Files extends Model
 {
+    protected $guarded = [
+        'id'
+    ];
 
+    public function path()
+    {
+        return 'storage/' . $this->dirname . $this->filename;
+    }
 }
