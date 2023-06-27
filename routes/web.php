@@ -25,8 +25,16 @@ Route::get('/', function () {
 });
 
 Route::get('locale/{locale}', function (string $locale, Request $request) {
+
     Session::put('locale', $locale);
-    return redirect()->back();
+    app()->setLocale($locale);
+    $segments = str_replace(url('/'), '', url()->previous());
+    $segments = array_filter(explode('/', $segments));
+    array_shift($segments);
+    array_unshift($segments, $locale);
+
+    return redirect()->to(implode('/', $segments));
+
 })->name('change.lang');
 
 Route::prefix('{locale}')
